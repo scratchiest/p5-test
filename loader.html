@@ -22,6 +22,11 @@
 
     <h1>TOUCH THE SCREEN FIRST TO ACCESS THE BUTTONS.</h1>
 
+    <label for="">Select mic source: </label>
+    <select id="sources" onchange="getValue()">
+        <option selected disabled>Please choose one below...</option>
+    </select>
+    
     <div class="container">
         <button id="start" disabled>Start</button>
         <button id="stop" disabled>Stop</button>
@@ -34,7 +39,18 @@
 
         function setup() {
             mic = new p5.AudioIn();
+            var sources = document.getElementById("sources");
+            mic.getSources((devicelist) => {
+                devicelist.map((device, index) => {
+                    sources.options[sources.options.length]  = new Option(device.label, index); 
+                })
+            })
             mic.start();
+        }
+
+        function getValue() {
+            var value = document.getElementById("sources").value;
+            mic.setSource(value);
         }
 
         function draw() { }
