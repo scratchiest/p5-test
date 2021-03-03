@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+    #start {
+        padding: 20px;
+        background-color: green;
+    }
+
+    #stop {
+        padding: 20px;
+        background-color: red;
+    }
+</style>
+<body>
+
+    <h1>TOUCH THE SCREEN FIRST TO ACCESS THE BUTTONS.</h1>
+
+    <div class="container">
+        <button id="start" disabled>Start</button>
+        <button id="stop" disabled>Stop</button>
+    </div>
+
+    <script src="p5.min.js"></script>
+    <script src="p5.sound.min.js"></script>
+    <script>
+        var mic;
+
+        function setup() {
+            mic = new p5.AudioIn();
+            mic.start();
+        }
+
+        function draw() { }
+
+        function touchStarted() {
+            getAudioContext().resume();
+            document.getElementById("start").disabled = false;
+        }
+
+        document.getElementById("start").addEventListener("click", function () {
+            mic.connect();
+            document.getElementById("start").disabled = true;
+            document.getElementById("stop").disabled = false;
+        })
+
+        document.getElementById("stop").addEventListener("click", function () {
+            mic.disconnect();
+            document.getElementById("stop").disabled = true;
+            document.getElementById("start").disabled = false;
+        })
+    </script>
+</body>
+</html>
